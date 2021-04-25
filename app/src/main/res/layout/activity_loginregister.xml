@@ -8,11 +8,81 @@
     android:layoutDirection="ltr"
     android:background="@color/background">
 
+    <ProgressBar
+        android:id="@+id/login_register_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/login_register_choose_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_baseline_shopping_basket_24"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="به فروشگاه رشت خوش آمدید"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="@color/colorPrimaryDark"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/login_register_choose_login_btn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:layout_margin="8dp"
+                android:background="@drawable/main_btn_background"
+                android:textColor="@color/white"
+                android:text="ورود"/>
+
+            <TextView
+                android:id="@+id/login_register_choose_register_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:padding="12dp"
+                android:textSize="18sp"
+                android:textColor="@color/colorAccent"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="ثبت نام کنید"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/login_register_phone_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,6 +104,16 @@
                 android:textColor="@color/colorText"
                 android:padding="16dp"/>
 
+            <EditText
+                android:id="@+id/login_register_phone_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="نام خود را وارد کنید"
+                android:layout_marginTop="24dp"
+                android:textSize="16sp"
+                android:textColor="@color/colorText"
+                android:padding="16dp"/>
+
             <Button
                 android:id="@+id/login_register_phone_get_code_btn"
                 android:layout_width="wrap_content"
@@ -43,7 +123,7 @@
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="دریافت کد"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/main_btn_background"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
@@ -97,7 +177,7 @@
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="ورود"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/main_btn_background"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"/>

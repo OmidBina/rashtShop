@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,6 +54,8 @@ public class LoginRegister extends AppCompatActivity {
 
     private String userNumber = "";
 
+    private AppData appData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +69,9 @@ public class LoginRegister extends AppCompatActivity {
     }
 
     private void elements() {
+
+        appData = new AppData(this);
+        appData.set_which_part(TAG);
 
         progressBar = findViewById(R.id.login_register_loading);
 
@@ -179,13 +188,35 @@ public class LoginRegister extends AppCompatActivity {
             }
         });
 
+        get_code_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (s.length() == 4){
+
+                    active_user(userNumber, s.toString());
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         edit_phone_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 show_phone_layout();
-
-                //get_phone_et.setText("");
+                get_code_et.setText("");
             }
         });
 
@@ -375,7 +406,8 @@ public class LoginRegister extends AppCompatActivity {
                     String message = jsonObject.getString("message");
 
                     Toast.makeText(LoginRegister.this, message, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(LoginRegister.this, token, Toast.LENGTH_SHORT).show();
+
+                    appData.set_token(token);
 
                 }catch (JSONException e){
                     Log.e(TAG, "onResponse: ", e);

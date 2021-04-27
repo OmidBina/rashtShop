@@ -153,7 +153,7 @@ public class LoginRegister extends AppCompatActivity {
 
                 }else {
 
-                    ///// LOGIN
+                    login_user(userNumber);
 
                 }
 
@@ -267,7 +267,6 @@ public class LoginRegister extends AppCompatActivity {
                 }
 
                 show_code_layout();
-
             }
         };
 
@@ -289,6 +288,63 @@ public class LoginRegister extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("mobile", userMobile);
                 params.put("fullname", userName);
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+    private void login_user(String userMobile) {
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        String url = "https://shopapitest.prkiran.ir/users/login";
+
+        show_loading();
+
+        Response.Listener<String> stringListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.e(TAG, "onResponse: " + response);
+
+                try {
+
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String activation_number = jsonObject.getJSONObject("user").getString("activation_number");
+
+                    String message = jsonObject.getString("message");
+
+                    Toast.makeText(LoginRegister.this, message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginRegister.this, activation_number, Toast.LENGTH_SHORT).show();
+
+                }catch (JSONException e){
+                    Log.e(TAG, "onResponse: ", e);
+                }
+
+                show_code_layout();
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e(TAG, "onErrorResponse: ", error);
+
+                show_phone_layout();
+
+            }
+        };
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, stringListener, errorListener){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("mobile", userMobile);
                 return params;
             }
         };

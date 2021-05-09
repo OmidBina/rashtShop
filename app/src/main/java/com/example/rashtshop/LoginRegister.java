@@ -401,21 +401,24 @@ public class LoginRegister extends AppCompatActivity {
 
                     JSONObject jsonObject = new JSONObject(response);
 
-                    String token = jsonObject.getJSONObject("user").getString("api_token");
-
                     String message = jsonObject.getString("message");
 
                     Toast.makeText(LoginRegister.this, message, Toast.LENGTH_SHORT).show();
 
-                    appData.set_token(token);
+                    if (jsonObject.getBoolean("status")) {
+
+                        String token = jsonObject.getJSONObject("user").getString("api_token");
+
+                        appData.set_token(token);
+
+                        Intent intent = new Intent(LoginRegister.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
 
                 }catch (JSONException e){
                     Log.e(TAG, "onResponse: ", e);
                 }
-
-                Intent intent = new Intent(LoginRegister.this, MainActivity.class);
-                startActivity(intent);
-                finish();
 
             }
         };

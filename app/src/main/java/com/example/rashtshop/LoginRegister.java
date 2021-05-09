@@ -112,6 +112,7 @@ public class LoginRegister extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                want_to_register = false;
                 show_phone_layout();
 
             }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="خانه"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/navigation_category"
+        android:icon="@drawable/ic_baseline_category_24"
+        android:title="دسته‌بندی"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/navigation_basket"
+        android:icon="@drawable/ic_baseline_shopping_basket_24"
+        android:title="سبد‌خرید"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="پروفایل"
+        app:showAsAction="always"/>
+
+</menu>

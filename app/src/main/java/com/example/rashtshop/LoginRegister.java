@@ -286,18 +286,21 @@ public class LoginRegister extends AppCompatActivity {
 
                     JSONObject jsonObject = new JSONObject(response);
 
-                    String activation_number = jsonObject.getJSONObject("user").getString("activation_number");
-
                     String message = jsonObject.getString("message");
 
                     Toast.makeText(LoginRegister.this, message, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(LoginRegister.this, activation_number, Toast.LENGTH_SHORT).show();
+
+                    if (jsonObject.getBoolean("status")) {
+
+                        String activation_number = jsonObject.getJSONObject("user").getString("activation_number");
+                        Toast.makeText(LoginRegister.this, activation_number, Toast.LENGTH_SHORT).show();
+
+                        show_code_layout();
+                    }
 
                 }catch (JSONException e){
                     Log.e(TAG, "onResponse: ", e);
                 }
-
-                show_code_layout();
             }
         };
 

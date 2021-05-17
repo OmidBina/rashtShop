@@ -6,7 +6,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.rashtshop.fragments.BasketFragment;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Navigation_viewPager_adapter adapter;
 
+    private AppData appData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         elements();
+
+        Log.e(TAG, "onCreate: " + appData.get_token());
     }
 
     private void elements() {
+
+        appData = new AppData(this);
 
         bottomNavigationView = findViewById(R.id.main_bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -55,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0, false);
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+
+        // Prevent page scrolling
+        viewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

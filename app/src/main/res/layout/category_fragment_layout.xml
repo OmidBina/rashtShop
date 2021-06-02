@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:background="@color/background"
+    android:layoutDirection="ltr">
 
     <ProgressBar
         android:id="@+id/category_loading"
@@ -11,14 +15,15 @@
         android:visibility="gone"/>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
 
-        <GridLayout
-            android:id="@+id/category_gridlayout"
+        <com.nex3z.flowlayout.FlowLayout
+            android:id="@+id/category_flowlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:rowCount="2"/>
+            app:flRowSpacing="12dp"/>
 
     </ScrollView>
 

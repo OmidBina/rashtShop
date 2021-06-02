@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -24,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.rashtshop.AppData;
 import com.example.rashtshop.LoginRegister;
 import com.example.rashtshop.R;
+import com.nex3z.flowlayout.FlowLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +47,7 @@ public class CategoryFragment extends Fragment {
 
     private ProgressBar progressBar;
 
-    private GridLayout gridLayout;
+    private FlowLayout flowLayout;
 
     @Nullable
     @Override
@@ -58,9 +61,6 @@ public class CategoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        progressBar = view.findViewById(R.id.category_loading);
-        gridLayout = view.findViewById(R.id.category_gridlayout);
-
         get_data();
     }
 
@@ -69,6 +69,9 @@ public class CategoryFragment extends Fragment {
         context = getContext();
 
         appData = new AppData(context);
+
+        progressBar = view.findViewById(R.id.category_loading);
+        flowLayout = view.findViewById(R.id.category_flowlayout);
 
         manage_clicks();
 
@@ -88,13 +91,13 @@ public class CategoryFragment extends Fragment {
         String url = "https://shopapitest.prkiran.ir/products/categories";
 
         progressBar.setVisibility(View.VISIBLE);
-        gridLayout.setVisibility(View.GONE);
+        flowLayout.setVisibility(View.GONE);
 
         Response.Listener<String> stringListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-                Log.e(TAG, "onResponse: " + response);
+                //Log.e(TAG, "onResponse: " + response);
 
                 try {
 
@@ -104,12 +107,16 @@ public class CategoryFragment extends Fragment {
 
                         manage_data(jsonObject.getJSONArray("categories"));
 
+                        flowLayout.setVisibility(View.VISIBLE);
+
                     }
 
                 }catch (JSONException e){
                     Log.e(TAG, "onResponse: ", e);
                     Toast.makeText(context, "مشکلی پیش آمده است، دوباره تلاش کنید.", Toast.LENGTH_SHORT).show();
                 }
+
+                progressBar.setVisibility(View.GONE);
             }
         };
 
@@ -118,9 +125,9 @@ public class CategoryFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
                 Log.e(TAG, "onErrorResponse: ", error);
-
                 Toast.makeText(context, "مشکلی پیش آمده است، دوباره تلاش کنید.", Toast.LENGTH_SHORT).show();
 
+                progressBar.setVisibility(View.GONE);
             }
         };
 
@@ -160,15 +167,29 @@ public class CategoryFragment extends Fragment {
                 }
 
             }
-
-
         }
 
     }
 
     private void add_to_gridLayout (int id, String name) {
 
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        View view = layoutInflater.inflate(R.layout.category_card_layout, null);
+
+        CardView cardView = view.findViewById(R.id.category_card_lay_main_lay);
+        TextView title = view.findViewById(R.id.category_card_lay_title);
+
+        title.setText(name);
+
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
+
+            }
+        });
+
+        flowLayout.addView(view);
     }
 }

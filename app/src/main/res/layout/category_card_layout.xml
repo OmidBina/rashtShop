@@ -20,10 +20,11 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/category_card_lay_image"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:src="@drawable/ic_launcher_background"
-                android:layout_margin="16dp"/>
+                android:layout_margin="12dp"/>
 
             <TextView
                 android:id="@+id/category_card_lay_title"

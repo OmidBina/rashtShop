@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.rashtshop.modelAdapter.BasketModel;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -27,6 +28,9 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class ProductDetail extends AppCompatActivity {
 
@@ -46,6 +50,8 @@ public class ProductDetail extends AppCompatActivity {
 
     private ProgressBar progressBar;
 
+    private Realm realm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +64,8 @@ public class ProductDetail extends AppCompatActivity {
         elements();
 
         get_data();
+
+        rSize();
     }
 
     private void elements() {
@@ -82,8 +90,26 @@ public class ProductDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                add_to_basket(product_id, 1);
+
+                rSize();
             }
         });
+
+    }
+
+    private void rSize() {
+
+        realm = Realm.getDefaultInstance();
+
+        try {
+            RealmResults<BasketModel> results = realm.where(BasketModel.class).findAll();
+
+            Toast.makeText(ProductDetail.this, results.size() + "", Toast.LENGTH_SHORT).show();
+
+        }finally {
+            realm.close();
+        }
 
     }
 
@@ -194,5 +220,72 @@ public class ProductDetail extends AppCompatActivity {
             Log.e(TAG, "manage_data: ", e);
 
         }
+    }
+
+    /*private void realmTransaction() {
+
+        realm = Realm.getDefaultInstance();
+
+        try {
+            // 1
+            BasketModel basketModel = realm.createObject(BasketModel.class);
+
+            basketModel.setProduct_id(1);
+            basketModel.setProduct_name("a");
+
+            realm.insert(basketModel);
+
+            // 2
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+
+                    BasketModel basketModel = realm.createObject(BasketModel.class);
+
+                    basketModel.setProduct_id(2);
+                    basketModel.setProduct_name("b");
+
+                }
+            });
+        }finally {
+            realm.close();
+        }
+
+    }
+
+    private void realmSearch() {
+
+        realm = Realm.getDefaultInstance();
+
+        try {
+            RealmResults<BasketModel> results = realm.where(BasketModel.class).findAll();
+
+            results.size();
+        }finally {
+            realm.close();
+        }
+
+    }*/
+
+    private void add_to_basket(int product_id, int product_count) {
+
+        realm = Realm.getDefaultInstance();
+
+        try {
+
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+
+                    BasketModel basketModel = realm.createObject(BasketModel.class);
+
+                    basketModel.setProduct_id(product_id);
+                    basketModel.setProduct_count(product_count);
+                }
+            });
+        }finally {
+            realm.close();
+        }
+
     }
 }

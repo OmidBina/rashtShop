@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textColor="@color/colorText"
+        android:text="آیا می‌خواهید از حساب کاربری خود خارج شوید؟"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="18dp">
+
+        <Button
+            android:id="@+id/exit_profile_yes_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_btn_background"
+            android:textColor="@color/white"
+            android:layout_alignParentStart="true"
+            android:textStyle="bold"
+            android:text="بله"/>
+
+        <Button
+            android:id="@+id/exit_profile_no_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/green_btn_background"
+            android:textColor="@color/white"
+            android:layout_alignParentEnd="true"
+            android:textStyle="bold"
+            android:text="خیر"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

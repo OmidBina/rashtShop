@@ -40,4 +40,11 @@ public class AppData {
     public String get_token() {
         return sharedPreferences.getString("token", "");
     }
+
+    public void del_all() {
+        editor.remove("first_time");
+        editor.remove("which_part");
+        editor.remove("token");
+        editor.commit();
+    }
 }
